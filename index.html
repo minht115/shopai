@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính BMI Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+        .box {
+            max-width: 420px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .affiliate {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            text-align: center;
+        }
+        .affiliate a {
+            color: #e5533d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>💪 Tính BMI</h2>
+
+    <input id="height" type="number" placeholder="Chiều cao (cm)">
+    <input id="weight" type="number" placeholder="Cân nặng (kg)">
+
+    <button onclick="calcBMI()">Tính ngay</button>
+
+    <div class="result" id="result"></div>
+
+    <!-- VÙNG GẮN AFFILIATE -->
+    <div class="affiliate">
+        👉 Gợi ý sản phẩm hỗ trợ giảm cân  
+        <br>
+        <a href="https://LINK-AFFILIATE-CUA-ANH" target="_blank">
+            Xem ngay tại đây 🔥
+        </a>
+    </div>
+</div>
+
+<script>
+function calcBMI() {
+    let h = document.getElementById("height").value;
+    let w = document.getElementById("weight").value;
+
+    if (!h || !w) {
+        document.getElementById("result").innerHTML = "⚠️ Vui lòng nhập đủ thông tin";
+        return;
+    }
+
+    h = h / 100;
+    let bmi = (w / (h * h)).toFixed(1);
+    let status = "";
+
+    if (bmi < 18.5) status = "Gầy";
+    else if (bmi < 25) status = "Bình thường";
+    else if (bmi < 30) status = "Thừa cân";
+    else status = "Béo phì";
+
+    document.getElementById("result").innerHTML =
+        `BMI của bạn: <b>${bmi}</b><br>Tình trạng: <b>${status}</b>`;
+}
+</script>
+
+</body>
+</html>
