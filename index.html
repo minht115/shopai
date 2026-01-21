@@ -1,134 +1,130 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Kiểm tra BMI Nam & Nữ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
-    }
-    .box {
-      max-width: 420px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    .gender {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    .gender label {
-      margin: 0 15px;
-      font-size: 16px;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      font-size: 16px;
-    }
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #0d6efd;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .result {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 17px;
-    }
-    .result a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #e5533d;
-      font-weight: bold;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>BMI Nam Nữ & Gan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    padding: 20px;
+}
+.container {
+    max-width: 430px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+h1 {
+    text-align: center;
+}
+select, input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1677ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f9fafb;
+}
+.link {
+    display: block;
+    margin-top: 10px;
+    color: #d4380d;
+    font-weight: bold;
+    text-decoration: none;
+}
+.note {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+</style>
 </head>
 
 <body>
+<div class="container">
+<h1>⚖️ BMI & Sức khỏe Gan</h1>
 
-<div class="box">
-  <h2>💪 Kiểm tra BMI</h2>
+<select id="gender">
+    <option value="">-- Chọn giới tính --</option>
+    <option value="nam">Nam</option>
+    <option value="nu">Nữ</option>
+</select>
 
-  <div class="gender">
-    <label>
-      <input type="radio" name="gender" value="male" checked> 👨 Nam
-    </label>
-    <label>
-      <input type="radio" name="gender" value="female"> 👩 Nữ
-    </label>
-  </div>
+<input type="number" id="height" placeholder="Chiều cao (cm)">
+<input type="number" id="weight" placeholder="Cân nặng (kg)">
 
-  <input id="height" type="number" placeholder="Chiều cao (cm)">
-  <input id="weight" type="number" placeholder="Cân nặng (kg)">
+<button onclick="calcBMI()">Kiểm tra ngay</button>
 
-  <button onclick="calculateBMI()">Tính ngay</button>
+<div id="result" class="result" style="display:none;"></div>
 
-  <div id="result" class="result"></div>
+<div class="note">
+ℹ️ Ứng dụng mang tính tham khảo. Nếu mệt mỏi, đau tức hạ sườn phải, nên kiểm tra gan.
+</div>
 </div>
 
 <script>
-function calculateBMI() {
-  const h = document.getElementById("height").value;
-  const w = document.getElementById("weight").value;
-  const gender = document.querySelector('input[name="gender"]:checked').value;
+function calcBMI() {
+    var g = document.getElementById("gender").value;
+    var h = document.getElementById("height").value;
+    var w = document.getElementById("weight").value;
 
-  if (!h || !w) {
-    document.getElementById("result").innerHTML = "⚠️ Vui lòng nhập đủ thông tin";
-    return;
-  }
-
-  const height = h / 100;
-  const bmi = (w / (height * height)).toFixed(1);
-
-  let text = "";
-  let link = "";
-
-  if (gender === "male") {
-    if (bmi < 18.5) {
-      text = "Nam gầy – nên tăng cân";
-      link = "LINK_TANG_CAN_NAM";
-    } else if (bmi < 23) {
-      text = "Nam cân đối – giữ form";
-      link = "LINK_GIU_DANG_NAM";
-    } else {
-      text = "Nam thừa cân – nên giảm mỡ";
-      link = "LINK_GIAM_MO_NAM";
+    if (!g || !h || !w) {
+        alert("Vui lòng nhập đầy đủ thông tin");
+        return;
     }
-  } else {
-    if (bmi < 18.5) {
-      text = "Nữ gầy – tăng cân an toàn";
-      link = "LINK_TANG_CAN_NU";
-    } else if (bmi < 22) {
-      text = "Nữ dáng đẹp – giữ dáng";
-      link = "LINK_GIU_DANG_NU";
-    } else {
-      text = "Nữ thừa cân – giảm mỡ nhẹ";
-      link = "LINK_GIAM_MO_NU";
-    }
-  }
 
-  document.getElementById("result").innerHTML = `
-    <p><b>BMI của bạn:</b> ${bmi}</p>
-    <p>${text}</p>
-    <a href="${link}" target="_blank" rel="nofollow sponsored">
-      👉 Xem sản phẩm phù hợp 🔥
-    </a>
-  `;
+    var bmi = w / ((h/100) * (h/100));
+    bmi = bmi.toFixed(1);
+
+    var msg = "";
+    var link = "";
+
+    if (bmi < 18.5) {
+        msg = (g === "nam")
+        ? "⚠️ Nam giới hơi gầy.<br>Gan dễ thiếu năng lượng, dễ mệt nếu làm việc cường độ cao."
+        : "⚠️ Nữ giới hơi gầy.<br>Gan và nội tiết dễ bị ảnh hưởng nếu ăn uống thiếu chất.";
+        link = "👉 <a class='link' href='https://linktr.ee/minhthieu' target='_blank'>Gợi ý bồi bổ phù hợp</a>";
+    }
+    else if (bmi < 23) {
+        msg = (g === "nam")
+        ? "✅ BMI chuẩn nam giới.<br>Gan hoạt động tốt nếu hạn chế rượu bia."
+        : "✅ BMI chuẩn nữ giới.<br>Gan ổn định nếu ngủ đủ và ăn uống điều độ.";
+        link = "👉 <a class='link' href='https://linktr.ee/minhthieu' target='_blank'>Bảo vệ gan mỗi ngày</a>";
+    }
+    else if (bmi < 25) {
+        msg = (g === "nam")
+        ? "⚠️ Nam giới thừa cân nhẹ.<br>Mỡ bụng có thể liên quan gan nhiễm mỡ."
+        : "⚠️ Nữ giới thừa cân nhẹ.<br>Dễ rối loạn nội tiết và tích mỡ gan.";
+        link = "👉 <a class='link' href='https://linktr.ee/minhthieu' target='_blank'>Hỗ trợ giảm mỡ & gan</a>";
+    }
+    else {
+        msg = (g === "nam")
+        ? "🚨 Nam giới BMI cao.<br>Nguy cơ gan nhiễm mỡ, men gan cao."
+        : "🚨 Nữ giới BMI cao.<br>Gan chịu áp lực lớn, dễ mệt mỏi kéo dài.";
+        link = "👉 <a class='link' href='https://linktr.ee/minhthieu' target='_blank'>Giải pháp hỗ trợ gan</a>";
+    }
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML =
+        "<strong>BMI của bạn: " + bmi + "</strong><br><br>" + msg + "<br>" + link;
 }
 </script>
 
